@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+
+<comment>Propriedades do sistema.</comment>
+
+<!-- Título geral da aplicação. -->
+<entry key="tqc.titulo">Tomara Que Caia</entry>
+
+<!-- Localização. Ainda há restrições quanto à internacionalização. -->
+<entry key="tqc.cultura">pt-BR</entry>
+
+<!-- Diretório com os arquivos de personalização da interface gráfica. -->
+<entry key="tqc.pele">padrao</entry>
+
+<!-- Quando a aplicação for encerrada, reiniciá-la automaticamente? [sim|nao] -->
+<entry key="tqc.reiniciarAoEncerrar">nao</entry>
+
+</properties>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE taglib
+	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+	
+<taglib>
+
+	<tlibversion>1.2</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>tqc</shortname>
+	<info>Tomara-Que-Caia</info>
+
+	<tag>
+		<name>url</name>
+		<tagclass>com.joseflavio.tqc.servlet.URLTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>titulo</name>
+		<tagclass>com.joseflavio.tqc.servlet.TituloTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>formParams</name>
+		<tagclass>com.joseflavio.tqc.servlet.FormParamsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>identificacao</name>
+		<tagclass>com.joseflavio.tqc.servlet.IdentificacaoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>controle</name>
+		<tagclass>com.joseflavio.tqc.servlet.ControleTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>alerta</name>
+		<tagclass>com.joseflavio.tqc.servlet.AlertaTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>dado</name>
+		<tagclass>com.joseflavio.tqc.servlet.DadoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>nome</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>id</name>
+		<tagclass>com.joseflavio.tqc.servlet.DadoIdentificacaoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>nome</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>conteudo</name>
+		<tagclass>com.joseflavio.tqc.servlet.ConteudoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>nome</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>atributo</name>
+		<tagclass>com.joseflavio.tqc.servlet.AtributoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>nome</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tipo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>trechoMensagemErro</name>
+		<tagclass>com.joseflavio.tqc.servlet.TrechoMensagemErroTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+	<tag>
+		<name>trechoMensagemInformacao</name>
+		<tagclass>com.joseflavio.tqc.servlet.TrechoMensagemInformacaoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+	<tag>
+		<name>mensagemErro</name>
+		<tagclass>com.joseflavio.tqc.servlet.MensagemErroTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>mensagemInformacao</name>
+		<tagclass>com.joseflavio.tqc.servlet.MensagemInformacaoTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>dadoCorrente</name>
+		<tagclass>com.joseflavio.tqc.servlet.DadoCorrenteTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>nome</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>dados</name>
+		<tagclass>com.joseflavio.tqc.servlet.DadosTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>nomeInicial</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nomeFinal</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inclusive</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>comandos</name>
+		<tagclass>com.joseflavio.tqc.servlet.ComandosTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+	<tag>
+		<name>formulario</name>
+		<tagclass>com.joseflavio.tqc.servlet.FormularioCamposTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+	<tag>
+		<name>formularioCampoRotulo</name>
+		<tagclass>com.joseflavio.tqc.servlet.FormularioCampoRotuloTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+
+	<tag>
+		<name>formularioCampoDados</name>
+		<tagclass>com.joseflavio.tqc.servlet.FormularioCampoDadosTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+	<tag>
+		<name>desconsiderar</name>
+		<tagclass>com.joseflavio.tqc.servlet.DesconsiderarTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+</taglib>

@@ -1,0 +1,674 @@
+
+/*
+
+  Copyright (C) 2009-2013 José Flávio de Souza Dias Júnior
+  
+  This file is part of José Flávio Livre - <http://www.joseflavio.com/livre/>.
+  
+  José Flávio Livre is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  José Flávio Livre is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with José Flávio Livre. If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+/*
+
+  Direitos Autorais Reservados (C) 2009-2013 José Flávio de Souza Dias Júnior
+  
+  Este arquivo é parte de José Flávio Livre - <http://www.joseflavio.com/livre/>.
+  
+  José Flávio Livre é software livre: você pode redistribuí-lo e/ou modificá-lo
+  sob os termos da Licença Pública Menos Geral GNU conforme publicada pela
+  Free Software Foundation, tanto a versão 3 da Licença, como
+  (a seu critério) qualquer versão posterior.
+  
+  José Flávio Livre é distribuído na expectativa de que seja útil,
+  porém, SEM NENHUMA GARANTIA; nem mesmo a garantia implícita de
+  COMERCIABILIDADE ou ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a
+  Licença Pública Menos Geral do GNU para mais detalhes.
+  
+  Você deve ter recebido uma cópia da Licença Pública Menos Geral do GNU
+  junto com José Flávio Livre. Se não, veja <http://www.gnu.org/licenses/>.
+
+*/
+
+/* Página */
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+/* Link */
+
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-decoration: underline;
+	color: #0000CC;
+}
+
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-decoration: underline;
+	color: #0000CC;
+	
+}
+
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-decoration: underline;
+	color: #000033;
+}
+
+/* Aplicação */
+
+.fundoGeral {
+	background: #FFFFFF;
+}
+
+.fundoAplicacao {
+	background: inherit;
+}
+
+.informacao {
+	position: absolute;
+	top: 38px;
+	left: 0;
+	right: 0;
+	padding-top: 0px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	border-width: 0;
+	background: #FFF;
+}
+
+.avisoTQC {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+}
+
+.janelaMensagem {
+	display: none;
+	position: fixed;
+	width: 240px;
+	height: auto;
+	top: 38px;
+	right: 2px;
+	padding: 0.4em;	
+	z-index: 100;
+}
+
+.janelaMensagem h3 {
+	margin: 0;
+	padding: 0.4em;
+	text-align: center;
+}
+
+.janelaMensagem p {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+}
+
+.direitosAutorais {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 9px;
+	text-align: right;
+}
+
+.cantoDireitoInferior {
+	position: fixed;
+	size: auto;
+	right: 0;
+	bottom: 0;
+	border: 0;
+}
+
+/* Controle */
+
+.barraControle {
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	
+	background: #666666;
+	height: 36px;
+	overflow: hidden;
+	z-index: 100;
+	
+	border-style: solid;
+	border-color: #FFF;
+	border-width: 2px;
+	border-bottom: 0px;
+	
+	padding: 0px;
+	
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	
+}
+
+.barraControle img.logotipo {
+	margin-top: 8px;
+	margin-left: 8px;
+	z-index: 100;
+}
+
+.barraControle div.viagens {
+	position: absolute;
+	display: inline;
+	text-wrap: none;
+	white-space: nowrap;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.barraControle div.comandos {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-left: 8px;
+	background: #666666;
+	z-index: 100;
+}
+
+.barraControle a {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow: 0px -1px 1px #000;
+	text-decoration: none;
+}
+
+.barraControle a.viagemAtiva {
+	color: #CCC;
+}
+
+.barraControle a.viagem {
+	color: #8B8B8B;
+}
+
+.barraControle a.fecharAtiva {
+	color: #CCC;
+	font-size: 8px;
+}
+
+.barraControle a.fechar {
+	color: #8B8B8B;
+	font-size: 8px;
+}
+
+.botaoViagem {
+	font-family: monospace;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #E7E9F5;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+}
+
+.botaoViagemAtiva {
+	font-family: monospace;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+}
+
+/* Menu */
+
+.menu {
+	position: fixed;
+	left: 8px;
+	top: 34px;
+	width: auto;
+	max-width: 400px;
+	height: auto;
+	max-height: 600px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 16px;
+	padding-right: 16px;
+	z-index: 1000;
+	overflow: auto;
+	background-color: #E7E7E7;
+	border-radius: 5px;
+	opacity: 0;
+	visibility: hidden;
+	box-shadow: 2px 2px 5px #888888;
+}
+
+.menu div.titulo {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+	padding-bottom: 4px;
+	color: #333;
+}
+
+.menu a.comando {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
+.menu a.submenu {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
+.menuAreaDeSaida {
+	position: fixed;
+	opacity: 0;
+	visibility: hidden;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	z-index: 99;
+}
+
+/* Dados */
+
+.dadoComando {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #CCCCCC;
+	border-style:solid;
+	border-width:1px;
+	border-color: #999999;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+
+.dadoComando:hover {
+	border-color: #666666;
+}
+
+.dadoTexto {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.dadoTextoEditavel {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 0px 0px 0px 2px;
+	height: 20px;
+}
+
+.dadoData {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 0px 0px 0px 2px;
+	height: 20px;
+}
+
+.dadoHora {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 0px 0px 0px 2px;
+	height: 20px;
+}
+
+.dadoDataHora {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 0px 0px 0px 2px;
+	height: 20px;
+}
+
+.dadoSelecao {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.dadoSelecaoMultipla {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.dadoSelecaoEditavel {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #CCCCCC;
+	height: 22px;
+	padding: 0px 4px 0px 2px;
+	border-radius: 0;
+	appearance: field;
+	-moz-appearance: none;
+	-webkit-appearance: textfield;
+}
+
+.dadoTabela {
+	width: 100%;
+	border-width: 0px;
+}
+
+.dadoBinarioTexto {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.dadoArquivo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	background: #FFFFFF;
+	border-style:solid;
+	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 0px 4px 0px 2px;
+	height: 22px;
+	text-align: left;
+}
+
+/* JQuery */
+
+.ui-datepicker-trigger {
+	vertical-align: middle;
+	margin-top: -3px;
+}
+
+.gecko .ui-datepicker-trigger {
+	vertical-align: middle;
+	margin-top: -4px;
+	margin-left: +2px;
+}
+
+.ie678 .ui-datepicker-trigger {
+	vertical-align: middle;
+	margin-top: -10px;
+	margin-left: +2px;
+}
+
+/* Formulário */
+
+.formSubtitulo {
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+}
+
+.formRotulo {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	color: #000000;
+}
+
+.formColunaRotulo {
+	width: 20%;
+	text-align: right;
+	vertical-align: top;
+}
+
+.formColunaValor {
+	text-align: left;
+}
+
+.formMensagemErro {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+}
+
+.formMensagemAtencao {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF6600;
+}
+
+.formMensagemInformacao {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #0000FF;
+}
+
+/* Listagem de objetos */
+
+.listaTitulo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 11px;
+	color: #000000;
+}
+
+.listaColunaTitulo {
+	text-align: left;
+	background: #CBCBCB;
+}
+
+.listaColunaValor {
+	text-align: left;
+}
+
+.listaLinhaImpar {
+	background: #FFFFFF;
+}
+
+.listaLinhaPar {
+	background: #EEEEEE;
+}
+
+/* Relatório */
+
+.relatorioTitulo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.relatorioSessao {
+	width: 100%;
+	border-style:solid;
+	border-width: 1px;
+	border-color: #ADADAD;
+}
+
+.relatorioNormal {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.relatorioNegrito {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.relatorioColunaRotulo {
+	width: 20%;
+	text-align: right;
+}
+
+.relatorioColunaValor {
+	text-align: left;
+}
+
+/* Questionamento */
+
+.questMensagem {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+}
+
+.questComandoResposta {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	text-decoration: none;
+	background: #CCCCCC;
+	border-style:solid;
+	border-width:1px;
+	border-color: #999999;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+
+.questComandoResposta:hover {
+	border-color: #666666;
+}
+
+/* Texto */
+
+.italico {
+	font-style: italic;
+}
+
+/* Alinhamento */
+
+.esquerda {
+	text-align: left;
+}
+
+.direita {
+	text-align: right;
+}
+
+.emcima {
+	vertical-align: top;
+}
+
+.embaixo {
+	vertical-align: bottom;
+}
+
+.centroH {
+	text-align: center;
+}
+
+.centroV {
+	vertical-align: middle;
+}
+
+/* Dimensão */
+
+.largura3Porc {
+	width: 3%;
+}
+
+.largura5Porc {
+	width: 5%;
+}
+
+.largura10Porc {
+	width: 10%;
+}
+
+.largura15Porc {
+	width: 15%;
+}
+
+.largura20Porc {
+	width: 20%;
+}
+
+.largura25Porc {
+	width: 25%;
+}
+
+.largura30Porc {
+	width: 30%;
+}
+
+.largura50Porc {
+	width: 50%;
+}
+
+.largura70Porc {
+	width: 70%;
+}
+
+.largura100Porc {
+	width: 100%;
+}
+
+/* Impressão */
+
+@media print {
+   .barraControle {display:none}
+   .botaoViagem {display:none}
+   .botaoViagemAtiva {display:none}
+   .cantoDireitoInferior {display:none}
+}
+
+.quebraPagina {
+	page-break-after: always;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<jardesc>
+    <jar path="JFL/tomcat/WEB-INF/lib/joseflavio2013.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/JFL/distribuicao/joseflavio2013.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=JFL/fonte&lt;com.joseflavio.tqc.console{Teste.java[Teste" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=JFL/recurso"/>
+        <javaElement handleIdentifier="=JFL/fonte"/>
+    </selectedElements>
+</jardesc>

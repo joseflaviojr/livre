@@ -1,0 +1,7 @@
+Em [TOMCAT]/conf/web.xml, seção "<servlet><servlet-name>jsp</servlet-name>...", inserir:
+		<init-param>
+			<param-name>enablePooling</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		
+Limpar [TOMCAT]/work/Catalina.

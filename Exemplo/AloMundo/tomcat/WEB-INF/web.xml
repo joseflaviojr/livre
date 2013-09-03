@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+	  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+	  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<servlet>
+		<servlet-name>alomundo</servlet-name>
+		<servlet-class>com.joseflavio.alomundo.aplicacao.AloMundoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>alomundo</servlet-name>
+		<url-pattern>/sistema</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>teste</servlet-name>
+		<servlet-class>com.joseflavio.tqc.teste.TesteTQCServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>teste</servlet-name>
+		<url-pattern>/teste</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>tqcdownload</servlet-name>
+		<servlet-class>com.joseflavio.tqc.servlet.DownloadServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>tqcdownload</servlet-name>
+		<url-pattern>/tqcdownload</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+ 		<exception-type>java.lang.Throwable</exception-type>
+    	<location>/erro.jsp</location>
+	</error-page>
+
+	<error-page>
+    	<error-code>403</error-code>
+    	<location>/erro.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>404</error-code>
+    	<location>/erro.jsp</location>
+	</error-page>
+
+	<listener>
+		<listener-class>com.joseflavio.tqc.servlet.ServletContextListenerImpl</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.joseflavio.tqc.servlet.HttpSessionListenerImpl</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.apache.commons.fileupload.servlet.FileCleanerCleanup</listener-class>
+	</listener>
+
+	<taglib> 
+		<taglib-uri>tqc</taglib-uri>
+		<taglib-location>/WEB-INF/tqc.tld</taglib-location> 
+	</taglib>
+
+</web-app>
