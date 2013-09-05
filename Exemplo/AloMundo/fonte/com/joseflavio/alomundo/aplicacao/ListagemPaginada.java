@@ -112,7 +112,7 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 	private void calcularPagina() {
 		
 		totalDeObjetos = contarTotal();
-		totalDePaginas = (int) Math.ceil( totalDeObjetos / totalPorPagina );
+		totalDePaginas = (int) Math.ceil( (double) totalDeObjetos / totalPorPagina );
 		
 		if( totalDePaginas == 0 ) totalDePaginas = 1;
 		
