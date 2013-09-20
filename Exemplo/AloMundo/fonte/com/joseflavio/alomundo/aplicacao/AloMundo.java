@@ -87,6 +87,8 @@ public class AloMundo extends AplicacaoTQC_JPA {
 		mais( "com.joseflavio.alomundo.aplicacao.filial", AdministradorFiltro.instancia );
 		mais( "com.joseflavio.alomundo.aplicacao.funcionario", AdministradorFiltro.instancia );
 		
+		setAutoAtualizar( true );
+		
 		int anoInicial = 2009;
 		int anoAtual = new Calendario( getCultura() ).getAno();
 		setDireitosAutorais( "joseflavio.com &copy; " + ( anoInicial < anoAtual ? anoInicial + "-" + anoAtual : anoAtual ) + "\nTodos os direitos reservados." );

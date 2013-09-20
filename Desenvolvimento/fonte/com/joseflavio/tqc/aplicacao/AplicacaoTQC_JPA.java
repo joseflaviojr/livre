@@ -70,6 +70,8 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	
 	private EntityTransaction entityTransaction;
 	
+	private boolean autoAtualizar = false;
+	
 	private boolean autoDestacar = false;
 	
 	/**
@@ -216,6 +218,8 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	
 	/**
 	 * Persiste um novo objeto.
+	 * @see EntityManager#persist(Object)
+	 * @see EntityManager#merge(Object)
 	 */
 	public <T extends Object> T persistir( T obj ) {
 		
@@ -224,10 +228,31 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 		if( autoDestacar ){
 			obj = em.merge( obj );
 			persistirPendencias();
-			return JPAUtil.destacar( em, obj );
+			em.detach( obj );
+			return obj;
 		}
 		
 		em.persist( obj );
+		return obj;
+		
+	}
+	
+	/**
+	 * Atualiza o estado do objeto de acordo com o bando de dados.
+	 * @see EntityManager#refresh(Object)
+	 */
+	public <T extends Object> T atualizar( T obj ) {
+		
+		EntityManager em = getEntityManager();
+		
+		if( autoDestacar ){
+			obj = em.merge( obj );
+			em.refresh( obj );
+			em.detach( obj );
+			return obj;
+		}
+
+		em.refresh( obj );
 		return obj;
 		
 	}
@@ -258,7 +283,12 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	 */
 	public <T extends Object> List<T> listarLimitada( String query, int resultadoInicial, int maximoResultados, Object... parametros ) {
 		List<T> lista = JPAUtil.listarLimitada( this, query, resultadoInicial, maximoResultados, parametros );
-		return autoDestacar && lista != null ? JPAUtil.destacar( this, lista ) : lista;
+		if( lista != null ){
+			EntityManager em = this.getEntityManager();
+			if( autoAtualizar ) lista = JPAUtil.atualizar( em, lista );
+			if( autoDestacar ) lista = JPAUtil.destacar( em, lista );
+		}
+		return lista;
 	}
 	
 	/**
@@ -280,7 +310,12 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	 */
 	public <T extends Object> List<T> listar( String query, Object... parametros ) {
 		List<T> lista = JPAUtil.listar( this, query, parametros );
-		return autoDestacar && lista != null ? JPAUtil.destacar( this, lista ) : lista;
+		if( lista != null ){
+			EntityManager em = this.getEntityManager();
+			if( autoAtualizar ) lista = JPAUtil.atualizar( em, lista );
+			if( autoDestacar ) lista = JPAUtil.destacar( em, lista );
+		}
+		return lista;
 	}
 	
 	/**
@@ -288,7 +323,12 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	 */
 	public <T extends Object> T obter( String query, Object... parametros ) {
 		T obj = JPAUtil.obter( this, query, parametros );
-		return autoDestacar && obj != null ? JPAUtil.destacar( this, obj ) : obj;
+		if( obj != null ){
+			EntityManager em = this.getEntityManager();
+			if( autoAtualizar ) em.refresh( obj );
+			if( autoDestacar ) em.detach( obj );
+		}
+		return obj;
 	}
 	
 	/**
@@ -306,8 +346,18 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	}
 	
 	/**
+	 * @see #atualizar(Object)
+	 */
+	public void setAutoAtualizar( boolean autoAtualizar ) {
+		this.autoAtualizar = autoAtualizar;
+	}
+	
+	public boolean isAutoAtualizar() {
+		return autoAtualizar;
+	}
+	
+	/**
 	 * @see EntityManager#detach(Object)
-	 * @see JPAUtil#destacar(AplicacaoTQC_JPA, Object)
 	 */
 	public void setAutoDestacar( boolean autoDestacar ) {
 		this.autoDestacar = autoDestacar;

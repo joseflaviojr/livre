@@ -145,6 +145,7 @@ public class JPAUtil {
 	
 	/**
 	 * @see EntityManager#detach(Object)
+	 * @deprecated Redirecionamento desnecessário. Utilizar EntityManager#detach(Object).
 	 */
 	public static <T extends Object> T destacar( EntityManager em, T obj ) {
 		em.detach( obj );
@@ -153,18 +154,33 @@ public class JPAUtil {
 	
 	/**
 	 * @see EntityManager#detach(Object)
+	 * @deprecated Redirecionamento desnecessário. Utilizar EntityManager#detach(Object).
 	 */
 	public static <T extends Object> T destacar( AplicacaoTQC_JPA aplicacao, T obj ) {
 		return destacar( aplicacao.getEntityManager(), obj );
 	}
 	
+	/**
+	 * @see EntityManager#detach(Object)
+	 */
 	public static <T extends Object> List<T> destacar( EntityManager em, List<T> lista ) {
 		for( T obj : lista ) em.detach( obj );
 		return lista;
 	}
 	
+	/**
+	 * @deprecated Utilizar {@link #destacar(EntityManager, List)}
+	 */
 	public static <T extends Object> List<T> destacar( AplicacaoTQC_JPA aplicacao, List<T> lista ) {
 		return destacar( aplicacao.getEntityManager(), lista );
+	}
+	
+	/**
+	 * @see EntityManager#refresh(Object)
+	 */
+	public static <T extends Object> List<T> atualizar( EntityManager em, List<T> lista ) {
+		for( T obj : lista ) em.refresh( obj );
+		return lista;
 	}
 	
 }
