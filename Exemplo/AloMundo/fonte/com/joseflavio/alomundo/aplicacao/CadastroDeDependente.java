@@ -39,6 +39,8 @@
 
 package com.joseflavio.alomundo.aplicacao;
 
+import javax.persistence.Entity;
+
 import com.joseflavio.tqc.TomaraQueCaiaException;
 
 /**
@@ -54,7 +56,11 @@ public abstract class CadastroDeDependente<O,DEPENDENCIA> extends Cadastro<O> {
 		
 		super( aplicacao, objeto, novo, titulo, subtitulo, false );
 		
-		this.dependencia = dependencia;
+		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){
+			this.dependencia = aplicacao.atualizar( dependencia );			
+		}else{
+			this.dependencia = dependencia;
+		}
 		
 		if( construir ) construir();
 		

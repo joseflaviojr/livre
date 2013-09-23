@@ -39,6 +39,8 @@
 
 package com.joseflavio.alomundo.aplicacao;
 
+import javax.persistence.Entity;
+
 import com.joseflavio.tqc.Informacao;
 import com.joseflavio.tqc.TomaraQueCaiaException;
 import com.joseflavio.tqc.Viagem;
@@ -57,7 +59,11 @@ public abstract class ListagemDeDependentesPaginada<O, DEPENDENCIA> extends List
 
 		super( aplicacao, cadastrador, titulo, subtitulo, false );
 		
-		this.dependencia = dependencia;
+		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){
+			this.dependencia = aplicacao.atualizar( dependencia );			
+		}else{
+			this.dependencia = dependencia;
+		}
 		
 		if( construir ) construir();
 		

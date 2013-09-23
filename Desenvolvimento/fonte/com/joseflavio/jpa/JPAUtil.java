@@ -183,4 +183,6 @@ public class JPAUtil {
 		return lista;
 	}
 	
+	//TODO Método que teste se um objeto é entidade de uma aplicação.
+	
 }
