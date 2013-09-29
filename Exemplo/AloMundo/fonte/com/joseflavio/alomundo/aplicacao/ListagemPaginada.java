@@ -74,9 +74,17 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 		if( construir ) construir();
 		
 	}
+	
+	protected ListagemPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo, boolean construir ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, titulo, titulo, construir );
+	}
 
 	protected ListagemPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo, String subtitulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, titulo, subtitulo, true );
+	}
+	
+	protected ListagemPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, titulo, titulo, true );
 	}
 
 	@Override

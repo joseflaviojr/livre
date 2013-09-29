@@ -56,7 +56,7 @@ public abstract class CadastroDeDependente<O,DEPENDENCIA> extends Cadastro<O> {
 		
 		super( aplicacao, objeto, novo, titulo, subtitulo, false );
 		
-		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){
+		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){ //TODO JPAUtil
 			this.dependencia = aplicacao.atualizar( dependencia );			
 		}else{
 			this.dependencia = dependencia;

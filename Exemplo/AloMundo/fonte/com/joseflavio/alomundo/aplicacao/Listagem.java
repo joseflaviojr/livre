@@ -43,7 +43,6 @@ import java.util.List;
 
 import com.joseflavio.tqc.Dado;
 import com.joseflavio.tqc.Informacao;
-import com.joseflavio.tqc.OpcaoDeMenu;
 import com.joseflavio.tqc.TomaraQueCaiaException;
 import com.joseflavio.tqc.Viagem;
 import com.joseflavio.tqc.anotacao.TQCComando;
@@ -59,7 +58,7 @@ import com.joseflavio.validacao.ValidacaoException;
  * @author José Flávio de Souza Dias Júnior
  * @version 2013
  */
-public abstract class Listagem<O> extends com.joseflavio.tqc.aplicacao.Listagem<AloMundo, O> {
+public abstract class Listagem<O> extends ListagemBase<O> {
 	
 	protected Class<? extends Informacao> cadastrador;
 	
@@ -75,6 +74,10 @@ public abstract class Listagem<O> extends com.joseflavio.tqc.aplicacao.Listagem<
 		
 	}
 	
+	protected Listagem( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo, boolean construir ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, titulo, titulo, construir );
+	}
+	
 	protected Listagem( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo, String subtitulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, titulo, subtitulo, true );
 	}
@@ -83,11 +86,6 @@ public abstract class Listagem<O> extends com.joseflavio.tqc.aplicacao.Listagem<
 		this( aplicacao, cadastrador, titulo, titulo, true );
 	}
 	
-	@Override
-	protected void menu() throws TomaraQueCaiaException {
-		for( OpcaoDeMenu om : aplicacao.getMenuPadrao() ) maisOpcaoDeMenu( om );
-	}
-
 	@TQCComando( rotulo="Adicionar", nome="adicionar", ordem=1, funcao=Funcao.CONFIRMAR )
 	public void adicionar( Viagem viagem, Comando comando ) throws ValidacaoException, TomaraQueCaiaException {
 		

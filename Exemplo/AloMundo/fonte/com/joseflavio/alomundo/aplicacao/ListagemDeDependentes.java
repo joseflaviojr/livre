@@ -59,7 +59,7 @@ public abstract class ListagemDeDependentes<O, DEPENDENCIA> extends Listagem<O> 
 
 		super( aplicacao, cadastrador, titulo, subtitulo, false );
 		
-		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){
+		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){ //TODO JPAUtil
 			this.dependencia = aplicacao.atualizar( dependencia );			
 		}else{
 			this.dependencia = dependencia;
@@ -69,9 +69,17 @@ public abstract class ListagemDeDependentes<O, DEPENDENCIA> extends Listagem<O> 
 		
 	}
 	
+	protected ListagemDeDependentes( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo, boolean construir ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, dependencia, titulo, titulo, construir );
+	}
+	
 	protected ListagemDeDependentes( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo, String subtitulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, dependencia, titulo, subtitulo, true );
 	}
+	
+	protected ListagemDeDependentes( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, dependencia, titulo, titulo, true );
+	}	
 	
 	@Override
 	public void adicionar( Viagem viagem, Comando comando ) throws ValidacaoException, TomaraQueCaiaException {

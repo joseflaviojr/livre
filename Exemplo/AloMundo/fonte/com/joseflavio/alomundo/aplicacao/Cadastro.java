@@ -40,7 +40,6 @@
 package com.joseflavio.alomundo.aplicacao;
 
 import com.joseflavio.modelo.JFApresentacao;
-import com.joseflavio.tqc.OpcaoDeMenu;
 import com.joseflavio.tqc.TomaraQueCaiaException;
 import com.joseflavio.tqc.Viagem;
 import com.joseflavio.tqc.anotacao.TQCComando;
@@ -55,17 +54,19 @@ import com.joseflavio.validacao.ValidacaoException;
  * @author José Flávio de Souza Dias Júnior
  * @version 2013
  */
-public abstract class Cadastro<O> extends Formulario<AloMundo> {
+public abstract class Cadastro<O> extends FormularioBase {
 	
 	protected O objeto;
 	
 	protected boolean novo;
 	
+	protected boolean cancelado = false;
+	
 	protected Cadastro( AloMundo aplicacao, O objeto, boolean novo, String titulo, String subtitulo, boolean construir ) throws TomaraQueCaiaException {
 		
 		super( aplicacao, getTitulo( objeto, novo, titulo ), getTitulo( objeto, novo, subtitulo ) );
 		
-		this.objeto = objeto;
+		this.objeto = novo ? objeto : aplicacao.atualizar( objeto );
 		this.novo = novo;
 		
 		if( construir ) construir();
@@ -84,11 +85,31 @@ public abstract class Cadastro<O> extends Formulario<AloMundo> {
 		this( aplicacao, objeto, novo, "", "", true );
 	}
 	
-	private static String getTitulo( Object objeto, boolean novo, String formato ) throws TomaraQueCaiaException {
+	/**
+	 * @see #getTitulo(Class, boolean, String)
+	 */
+	public static String getTitulo( Object objeto, boolean novo, String formato ) throws TomaraQueCaiaException {
+		return getTitulo( objeto.getClass(), novo, formato );
+	}
+	
+	/**
+	 * @see #getTitulo(Class, boolean, String)
+	 */
+	public static String getTitulo( Object objeto, boolean novo ) throws TomaraQueCaiaException {
+		return getTitulo( objeto.getClass(), novo, "" );
+	}
+	
+	/**
+	 * Cria um título para o {@link Cadastro}.
+	 * @param classe {@link Class} com {@link JFApresentacao}.
+	 * @param novo Novo objeto da {@link Class}?
+	 * @param formato "%%s" = {@link JFApresentacao#plural() singular}; "%%p" = {@link JFApresentacao#plural() plural}; "" = automático.
+	 */
+	public static String getTitulo( Class<?> classe, boolean novo, String formato ) throws TomaraQueCaiaException {
 		
 		if( formato == null ) return null;
 		
-		JFApresentacao jfa = ModeloUtil.getJFApresentacao( objeto.getClass() );
+		JFApresentacao jfa = ModeloUtil.getJFApresentacao( classe );
 		if( jfa == null ) throw new IllegalArgumentException( JFApresentacao.class.getSimpleName() );
 		
 		String singular = jfa.value();
@@ -101,9 +122,11 @@ public abstract class Cadastro<O> extends Formulario<AloMundo> {
 		
 	}
 	
-	@Override
-	protected void menu() throws TomaraQueCaiaException {
-		for( OpcaoDeMenu om : aplicacao.getMenuPadrao() ) maisOpcaoDeMenu( om );
+	/**
+	 * @see #getTitulo(Class, boolean, String)
+	 */
+	public static String getTitulo( Class<?> classe, boolean novo ) throws TomaraQueCaiaException {
+		return getTitulo( classe, novo, "" );
 	}
 	
 	protected abstract void atribuicao() throws ValidacaoException, TomaraQueCaiaException;
@@ -131,6 +154,8 @@ public abstract class Cadastro<O> extends Formulario<AloMundo> {
 	
 	@TQCComando( rotulo="Cancelar", nome="cancelar", funcao=Funcao.CANCELAR )
 	public void cancelar( Viagem viagem, Comando comando ) throws ValidacaoException, TomaraQueCaiaException {
+		
+		cancelado = true;
 		
 		sair( viagem );
 		

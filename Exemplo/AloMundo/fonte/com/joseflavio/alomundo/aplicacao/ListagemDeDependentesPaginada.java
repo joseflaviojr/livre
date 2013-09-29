@@ -59,7 +59,7 @@ public abstract class ListagemDeDependentesPaginada<O, DEPENDENCIA> extends List
 
 		super( aplicacao, cadastrador, titulo, subtitulo, false );
 		
-		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){
+		if( dependencia.getClass().getAnnotation( Entity.class ) != null && aplicacao.getEntityManager().contains( dependencia ) ){ //TODO JPAUtil
 			this.dependencia = aplicacao.atualizar( dependencia );			
 		}else{
 			this.dependencia = dependencia;
@@ -69,8 +69,16 @@ public abstract class ListagemDeDependentesPaginada<O, DEPENDENCIA> extends List
 		
 	}
 	
+	protected ListagemDeDependentesPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo, boolean construir ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, dependencia, titulo, titulo, construir );
+	}
+	
 	protected ListagemDeDependentesPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo, String subtitulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, dependencia, titulo, subtitulo, true );
+	}
+	
+	protected ListagemDeDependentesPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, DEPENDENCIA dependencia, String titulo ) throws TomaraQueCaiaException {
+		this( aplicacao, cadastrador, dependencia, titulo, titulo, true );
 	}
 	
 	@Override
