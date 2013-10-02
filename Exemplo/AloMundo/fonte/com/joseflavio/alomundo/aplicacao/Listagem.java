@@ -112,8 +112,25 @@ public abstract class Listagem<O> extends ListagemBase<O> {
 	 */
 	protected Lista<Dado> acoesPara( O elemento ) {
 		
+		Comando comandoEditar = null;
+		Object dependencia = null;
+		
+		if( this instanceof ListagemDeDependentes<?,?> ) dependencia = ((ListagemDeDependentes<?,?>)this).dependencia;
+		else if( this instanceof ListagemDeDependentesPaginada<?,?> ) dependencia = ((ListagemDeDependentesPaginada<?,?>)this).dependencia;
+		
+		if( dependencia != null ){
+			try{
+				cadastrador.getConstructor( aplicacao.getClass(), dependencia.getClass(), elemento.getClass() );
+				comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, dependencia, elemento );
+			}catch( Exception e ){
+				comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento );
+			}
+		}else{
+			comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento );
+		}
+		
 		return new Lista<Dado>(
-				new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento ).setImagem( "img/iconep/editar.png" ),
+				comandoEditar.setImagem( "img/iconep/editar.png" ),
 				new ComandoApagarQuestionando( elemento ).setImagem( "img/iconep/remover.png" )
 		);
 		

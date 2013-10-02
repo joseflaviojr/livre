@@ -69,8 +69,6 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 		
 		super( aplicacao, cadastrador, titulo, subtitulo, false );
 		
-		calcularPagina();
-		
 		if( construir ) construir();
 		
 	}
@@ -85,6 +83,12 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 	
 	protected ListagemPaginada( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, titulo, titulo, true );
+	}
+	
+	@Override
+	protected void construir() throws com.joseflavio.tqc.TomaraQueCaiaException {
+		calcularPagina();
+		super.construir();
 	}
 
 	@Override
