@@ -62,7 +62,13 @@ public abstract class Listagem<O> extends ListagemBase<O> {
 	
 	protected Class<? extends Informacao> cadastrador;
 	
-	private boolean elementoEmNovaViagem = false;
+	protected boolean elementoEmNovaViagem = false;
+	
+	protected boolean mostrarComandoAdicionar = true;
+	
+	protected boolean mostrarComandoEditar = true;
+	
+	protected boolean mostrarComandoExcluir = true;
 	
 	protected Listagem( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo, String subtitulo, boolean construir ) throws TomaraQueCaiaException {
 		
@@ -84,6 +90,15 @@ public abstract class Listagem<O> extends ListagemBase<O> {
 	
 	protected Listagem( AloMundo aplicacao, Class<? extends Informacao> cadastrador, String titulo ) throws TomaraQueCaiaException {
 		this( aplicacao, cadastrador, titulo, titulo, true );
+	}
+	
+	@Override
+	protected void antesDeMostrarListagem( Viagem viagem ) throws TomaraQueCaiaException {
+		
+		super.antesDeMostrarListagem( viagem );
+		
+		getComando( "adicionar" ).setVisivel( mostrarComandoAdicionar && cadastrador != null );
+		
 	}
 	
 	@TQCComando( rotulo="Adicionar", nome="adicionar", ordem=1, funcao=Funcao.CONFIRMAR )
@@ -113,26 +128,32 @@ public abstract class Listagem<O> extends ListagemBase<O> {
 	protected Lista<Dado> acoesPara( O elemento ) {
 		
 		Comando comandoEditar = null;
-		Object dependencia = null;
 		
-		if( this instanceof ListagemDeDependentes<?,?> ) dependencia = ((ListagemDeDependentes<?,?>)this).dependencia;
-		else if( this instanceof ListagemDeDependentesPaginada<?,?> ) dependencia = ((ListagemDeDependentesPaginada<?,?>)this).dependencia;
+		if( mostrarComandoEditar && cadastrador != null ){
 		
-		if( dependencia != null ){
-			try{
-				cadastrador.getConstructor( aplicacao.getClass(), dependencia.getClass(), elemento.getClass() );
-				comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, dependencia, elemento );
-			}catch( Exception e ){
+			Object dependencia = null;
+			
+			if( this instanceof ListagemDeDependentes<?,?> ) dependencia = ((ListagemDeDependentes<?,?>)this).dependencia;
+			else if( this instanceof ListagemDeDependentesPaginada<?,?> ) dependencia = ((ListagemDeDependentesPaginada<?,?>)this).dependencia;
+			
+			if( dependencia != null ){
+				try{
+					cadastrador.getConstructor( aplicacao.getClass(), dependencia.getClass(), elemento.getClass() );
+					comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, dependencia, elemento );
+				}catch( Exception e ){
+					comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento );
+				}
+			}else{
 				comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento );
 			}
-		}else{
-			comandoEditar = new ComandoVisitar( "Editar", elementoEmNovaViagem, cadastrador, aplicacao, elemento );
+		
 		}
 		
-		return new Lista<Dado>(
-				comandoEditar.setImagem( "img/iconep/editar.png" ),
-				new ComandoApagarQuestionando( elemento ).setImagem( "img/iconep/remover.png" )
-		);
+		Lista<Dado> lista = new Lista<Dado>();
+		if( comandoEditar != null ) lista.mais( comandoEditar.setImagem( "img/iconep/editar.png" ) );
+		if( mostrarComandoExcluir ) lista.mais( new ComandoApagarQuestionando( elemento ).setImagem( "img/iconep/remover.png" ) );
+		
+		return lista;
 		
 	}
 	
@@ -143,10 +164,16 @@ public abstract class Listagem<O> extends ListagemBase<O> {
 		aplicacao.remover( elemento, "Não foi possível apagar \"" + elemento.toString() + "\".", true );
 	}
 	
+	/**
+	 * @deprecated {@link #elementoEmNovaViagem} acessado diretamente pelas subclasses.
+	 */
 	public boolean isElementoEmNovaViagem() {
 		return elementoEmNovaViagem;
 	}
 	
+	/**
+	 * @deprecated {@link #elementoEmNovaViagem} acessado diretamente pelas subclasses.
+	 */
 	public void setElementoEmNovaViagem( boolean elementoEmNovaViagem ) {
 		this.elementoEmNovaViagem = elementoEmNovaViagem;
 	}

@@ -94,6 +94,8 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 	@Override
 	protected void antesDeMostrarListagem( Viagem viagem ) throws TomaraQueCaiaException {
 		
+		super.antesDeMostrarListagem( viagem );
+		
 		this.<Texto>getDado( "totalDeObjetos" ).setTexto( "Total: " + totalDeObjetos );
 		this.<Texto>getDado( "pagina" ).setTexto( "Página: " + pagina + "/" + totalDePaginas );
 		
