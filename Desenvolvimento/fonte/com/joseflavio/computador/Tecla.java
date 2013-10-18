@@ -44,6 +44,7 @@ package com.joseflavio.computador;
  * Componente de teclado brasileiro (ABNT2).
  * @author José Flávio de Souza Dias Júnior
  * @version 2013
+ * @deprecated Quantidade de teclas limitada.
  */
 public enum Tecla {
 	
@@ -115,6 +116,15 @@ public enum Tecla {
 	 */
 	public long getValor() {
 		return valor;
+	}
+	
+	/**
+	 * Verifica se uma {@link Tecla} está presente numa combinação de {@link Tecla}s.
+	 * @param tecla {@link Tecla} desejada.
+	 * @param combinacao Combinação (disjunção lógica) de {@link Tecla#getValor() valores de teclas}. Exemplo: {@link Tecla#CONTROLAR} | {@link Tecla#A}
+	 */
+	public static boolean isPresente( Tecla tecla, long combinacao ) {
+		return ( combinacao & tecla.valor ) == tecla.valor;
 	}
 	
 }
