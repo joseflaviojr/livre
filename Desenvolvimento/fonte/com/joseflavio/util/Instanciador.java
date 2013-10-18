@@ -69,7 +69,6 @@ public class Instanciador<T> {
 			a[i] = parametros[i].getClass();
 		}
 		
-		
 		for( Constructor<?> c : classe.getDeclaredConstructors() ){
 			
 			Class<?> b[] = c.getParameterTypes();

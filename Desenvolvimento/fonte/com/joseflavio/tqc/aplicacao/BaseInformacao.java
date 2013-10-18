@@ -48,6 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.joseflavio.CapturaDeExcecao;
 import com.joseflavio.modelo.JFDica;
 import com.joseflavio.tqc.Alerta;
 import com.joseflavio.tqc.AnexoAtencao;
@@ -79,7 +80,7 @@ import com.joseflavio.validacao.ValidacaoException;
  * @author José Flávio de Souza Dias Júnior
  * @version 2013
  */
-public abstract class BaseInformacao<A extends AplicacaoTQC> extends Informacao implements Cabecalho, ComandoPrincipal, ComandoPorMetodo {
+public abstract class BaseInformacao<A extends AplicacaoTQC> extends Informacao implements Cabecalho, ComandoPrincipal, ComandoPorMetodo, CapturaDeExcecao {
 
 	public static final String ESTILO_SUBTITULO = "formSubtitulo";
 	public static final String ESTILO_MENSAGEM_ERRO = "formMensagemErro";
@@ -389,12 +390,20 @@ public abstract class BaseInformacao<A extends AplicacaoTQC> extends Informacao 
 		
 	}
 	
+	/**
+	 * @see #setMensagemErro(String)
+	 */
+	@Override
+	public void capturar( Exception e ) {
+		if( e instanceof ValidacaoException ) processarValidacaoException( (ValidacaoException) e );
+		else if( e.getCause() instanceof ValidacaoException ) processarValidacaoException( (ValidacaoException) e.getCause() );
+		else setMensagemErro( e.getMessage() );
+	}
 	
 	public void setSubtitulo( String subtitulo ) {
 		this.subtitulo = subtitulo;
 	}
 
-	
 	public String getSubtitulo() {
 		return subtitulo;
 	}
@@ -406,7 +415,6 @@ public abstract class BaseInformacao<A extends AplicacaoTQC> extends Informacao 
 	public void setSubtituloCentral( boolean subtituloCentral ) {
 		this.subtituloCentral = subtituloCentral;
 	}
-	
 	
 	public void setBanner( String imagem ) {
 		this.banner = imagem;

@@ -39,6 +39,7 @@
 
 package com.joseflavio.tqc.aplicacao;
 
+import com.joseflavio.CapturaDeExcecao;
 import com.joseflavio.tqc.AcionamentoDeComando;
 import com.joseflavio.tqc.TomaraQueCaia;
 import com.joseflavio.tqc.TomaraQueCaiaException;
@@ -76,7 +77,11 @@ public abstract class ComandoQuestionamento<T extends AplicacaoTQC> extends Coma
 	}
 
 	public final void acao( Viagem viagem ) throws ValidacaoException, TomaraQueCaiaException {
-		viagem.visitar( new Questionamento<T>( aplicacao, aplicacao.getTitulo(), null, this ).maisMensagem( pergunta ).maisResposta( cmdSim ).maisResposta( cmdNao ) );
+		
+		CapturaDeExcecao capturaDeExcecao = viagem.getAtual() instanceof CapturaDeExcecao ? (CapturaDeExcecao) viagem.getAtual() : null;
+		
+		viagem.visitar( new Questionamento<T>( aplicacao, aplicacao.getTitulo(), null, this, capturaDeExcecao ).maisMensagem( pergunta ).maisResposta( cmdSim ).maisResposta( cmdNao ) );
+		
 	}
 	
 	public final void acao( TomaraQueCaia tqc, Viagem viagem, Comando comando ) throws TomaraQueCaiaException {

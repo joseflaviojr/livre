@@ -39,6 +39,7 @@
 
 package com.joseflavio.tqc.aplicacao;
 
+import com.joseflavio.CapturaDeExcecao;
 import com.joseflavio.tqc.AcionamentoDeComando;
 import com.joseflavio.tqc.EspacoTextual;
 import com.joseflavio.tqc.Estilo;
@@ -59,6 +60,8 @@ public class Questionamento<T extends AplicacaoTQC> extends BaseInformacao<T> {
 	
 	private AcionamentoDeComando questionador;
 	
+	private CapturaDeExcecao capturaDeExcecao;
+	
 	private Marcador marcadorMensagem = new Marcador();
 	
 	private Marcador marcadorResposta = new Marcador();
@@ -69,11 +72,12 @@ public class Questionamento<T extends AplicacaoTQC> extends BaseInformacao<T> {
 	 * @see #maisMensagem(String)
 	 * @see #maisResposta(Comando) 
 	 */
-	public Questionamento( T aplicacao, String titulo, String banner, AcionamentoDeComando questionador ) throws TomaraQueCaiaException {
+	public Questionamento( T aplicacao, String titulo, String banner, AcionamentoDeComando questionador, CapturaDeExcecao capturaDeExcecao ) throws TomaraQueCaiaException {
 		
 		super( aplicacao, titulo, banner, null );
 		
 		this.questionador = questionador;
+		this.capturaDeExcecao = capturaDeExcecao;
 		
 		/*----------------------*/
 		
@@ -99,8 +103,16 @@ public class Questionamento<T extends AplicacaoTQC> extends BaseInformacao<T> {
 		
 	}
 	
+	public Questionamento( T aplicacao, String titulo, String banner, AcionamentoDeComando questionador ) throws TomaraQueCaiaException {
+		this( aplicacao, titulo, null, questionador, null );
+	}
+	
+	public Questionamento( T aplicacao, String titulo, AcionamentoDeComando questionador, CapturaDeExcecao capturaDeExcecao ) throws TomaraQueCaiaException {
+		this( aplicacao, titulo, null, questionador, capturaDeExcecao );
+	}
+	
 	public Questionamento( T aplicacao, String titulo, AcionamentoDeComando questionador ) throws TomaraQueCaiaException {
-		this( aplicacao, titulo, null, questionador );
+		this( aplicacao, titulo, questionador, null );
 	}
 	
 	public Questionamento<T> maisMensagem( String texto ) {
@@ -130,10 +142,19 @@ public class Questionamento<T extends AplicacaoTQC> extends BaseInformacao<T> {
 	
 	protected void acao( Viagem viagem, Comando comando ) throws ValidacaoException, TomaraQueCaiaException {
 		
-		if( questionador != null ){
+		try{
 			
-			questionador.acao( aplicacao, viagem, comando );
-			
+			if( questionador != null ){
+				questionador.acao( aplicacao, viagem, comando );
+			}
+		
+		}catch( TomaraQueCaiaException e ){
+			if( capturaDeExcecao != null ) capturaDeExcecao.capturar( e );
+			else throw e;
+		}catch( Exception e ){
+			if( capturaDeExcecao != null ) capturaDeExcecao.capturar( e );
+			else if( e instanceof ValidacaoException ) throw (ValidacaoException) e;
+			else throw new TomaraQueCaiaException( e );
 		}
 		
 	}
