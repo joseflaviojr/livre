@@ -132,6 +132,17 @@
 	</tag>
 
 	<tag>
+		<name>dadoRelativo</name>
+		<tagclass>com.joseflavio.tqc.servlet.DadoRelativoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>distancia</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
 		<name>dados</name>
 		<tagclass>com.joseflavio.tqc.servlet.DadosTag</tagclass>
 		<bodycontent>JSP</bodycontent>
@@ -148,7 +159,12 @@
 		<attribute>
 			<name>inclusive</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>passo</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
 

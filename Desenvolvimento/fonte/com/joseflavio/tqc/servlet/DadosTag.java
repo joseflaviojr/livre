@@ -67,6 +67,8 @@ public class DadosTag extends TQCBodyTagSupport {
 	
 	private boolean inclusive = false;
 	
+	private int passo = 1;
+	
 	private int posI, posF;
 	
 	public int doStartTag() throws JspException {
@@ -113,7 +115,8 @@ public class DadosTag extends TQCBodyTagSupport {
 	}
 	
 	private void proximo() {
-		((HttpServletRequest)pageContext.getRequest()).setAttribute( "TQC_Dado_Corrente", informacao.getDado( posI++ ) );
+		((HttpServletRequest)pageContext.getRequest()).setAttribute( "TQC_Dado_Corrente", informacao.getDado( posI ) );
+		posI += passo;
 	}
 	
 	@Override
@@ -163,6 +166,17 @@ public class DadosTag extends TQCBodyTagSupport {
 	
 	public void setInclusive( boolean inclusive ) {
 		this.inclusive = inclusive;
+	}
+
+	/**
+	 * Salto elementar da enumeração. Padrão: 1.
+	 */
+	public int getPasso() {
+		return passo;
+	}
+	
+	public void setPasso( int passo ) {
+		this.passo = passo;
 	}
 	
 }
