@@ -51,7 +51,7 @@
 String banner = null;
 if( informacao instanceof BaseInformacao ){
 	banner = ((BaseInformacao)informacao).getBanner();
-	if( banner == null && tqc instanceof AplicacaoTQC ) banner = ((AplicacaoTQC)tqc).getBanner();
+	//if( banner == null && tqc instanceof AplicacaoTQC ) banner = ((AplicacaoTQC)tqc).getBanner();
 }
 
 //Subtítulo
