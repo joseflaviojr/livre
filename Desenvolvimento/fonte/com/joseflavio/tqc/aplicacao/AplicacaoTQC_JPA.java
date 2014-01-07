@@ -68,8 +68,6 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	
 	private EntityManager entityManager;
 	
-	private EntityTransaction entityTransaction;
-	
 	private boolean autoAtualizar = false;
 	
 	private boolean autoDestacar = false;
@@ -142,11 +140,13 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 		try{
 			
 			if( entityManager == null || ! entityManager.isOpen() ){
-				
 				entityManager = getEntityManagerFactory().createEntityManager();
-				entityTransaction = entityManager.getTransaction();
+			}
+			
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			
+			if( entityTransaction != null && ! entityTransaction.isActive() ){
 				entityTransaction.begin();
-				
 			}
 			
 			return entityManager;
@@ -163,8 +163,13 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 		
 		try{
 
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			
 			if( entityTransaction != null && entityTransaction.isActive() ){
 				entityTransaction.commit();
+			}
+			
+			if( entityTransaction != null && ! entityTransaction.isActive() ){
 				entityTransaction.begin();
 			}
 			
@@ -186,6 +191,8 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 	}
 	
 	public synchronized void fecharEntityManager() {
+		
+		EntityTransaction entityTransaction = entityManager.getTransaction();
 		
 		try{
 			if( entityTransaction != null && entityTransaction.isActive() ) entityTransaction.commit();
