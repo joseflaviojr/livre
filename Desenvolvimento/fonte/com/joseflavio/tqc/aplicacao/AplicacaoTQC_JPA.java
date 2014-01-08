@@ -159,6 +159,9 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 		
 	}
 	
+	/**
+	 * @see EntityTransaction#commit()
+	 */
 	public synchronized void persistirPendencias() throws BancoDeDadosException {
 		
 		try{
@@ -167,6 +170,30 @@ public abstract class AplicacaoTQC_JPA extends AplicacaoTQC { //TODO Revisar sin
 			
 			if( entityTransaction != null && entityTransaction.isActive() ){
 				entityTransaction.commit();
+			}
+			
+			if( entityTransaction != null && ! entityTransaction.isActive() ){
+				entityTransaction.begin();
+			}
+			
+		}catch( Exception e ){
+			throw new BancoDeDadosException( e );
+		}
+		
+	}
+	
+	/**
+	 * Cancela todas as alterações realizadas desde o último {@link #persistirPendencias()}.<br>
+	 * @see EntityTransaction#rollback()
+	 */
+	public synchronized void cancelarPendencias() throws BancoDeDadosException {
+		
+		try{
+
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+			
+			if( entityTransaction != null && entityTransaction.isActive() ){
+				entityTransaction.rollback();
 			}
 			
 			if( entityTransaction != null && ! entityTransaction.isActive() ){

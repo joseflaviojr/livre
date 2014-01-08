@@ -157,6 +157,8 @@ public abstract class Cadastro<O> extends FormularioBase {
 		
 		cancelado = true;
 		
+		aplicacao.cancelarPendencias();
+		
 		sair( viagem );
 		
 	}

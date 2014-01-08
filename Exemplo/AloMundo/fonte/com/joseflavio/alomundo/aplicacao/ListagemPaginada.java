@@ -135,6 +135,14 @@ public abstract class ListagemPaginada<O> extends Listagem<O> {
 		
 	}
 	
+	/**
+	 * Vai para a primeira página.
+	 */
+	public void primeiraPagina() {
+		pagina = 1;
+		calcularPagina();
+	}
+	
 	@Override
 	protected void rodape() throws TomaraQueCaiaException {
 		
