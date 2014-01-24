@@ -63,8 +63,9 @@ if( texto.isEditavel() ){
 	TextoLimite textoLimite = (TextoLimite) texto.getValidacao( TextoLimite.class );
 	int maxCaracs = textoLimite != null ? textoLimite.getMaxCaracteres() : 0;
 	
+	conteudo = conteudo.replaceAll( "\"", "&quot;" );
+	
 	if( texto.isMultiplaLinha() ){
-		conteudo = conteudo.replaceAll( "\"", "&quot;" );
 	
 %>
 <textarea id="<tqc:id nome='<%=texto.getNome()%>'/>" name="<tqc:id nome='<%=texto.getNome()%>'/>" <%= texto.getLarguraTextual() > 0 ? " cols=\"" + texto.getLarguraTextual() + "\"" : "" %> <%= texto.getAlturaTextual() > 0 ? " rows=\"" + texto.getAlturaTextual() + "\"" : "" %> wrap="<%= texto.isQuebraDeLinhaAutomatica() ? "soft" : "off" %>" style="<%=estiloTamanho%>" class="<%= texto.getEstilo() != null ? texto.getEstilo() : "dadoTextoEditavel" %>" <%= dica != null ? "title=\"" + dica + "\"" : "" %> onfocus="foco(this)" onblur="focoperdido(this)"><%=conteudo%></textarea>
