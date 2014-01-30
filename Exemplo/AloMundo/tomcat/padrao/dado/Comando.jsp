@@ -59,7 +59,7 @@ String estiloTamanho = estiloTamanho( comando );
 
 if( imagem != null && imagem.length() > 0 ){
 %>
-<input type="image" id="<tqc:id nome='<%=comando.getNome()%>'/>" name="<tqc:id nome='<%=comando.getNome()%>'/>" value="Acionado" src="<%=raiz%>/<%=imagem%>" border="0" alt="<%=rotulo%>" class="centroV" tabindex="0" <%= dica != null ? "title=\"" + dica + "\"" : "" %> onfocus="foco(this)" onblur="focoperdido(this)" />
+<input type="image" id="<tqc:id nome='<%=comando.getNome()%>'/>" name="<tqc:id nome='<%=comando.getNome()%>'/>" value="Acionado" src="<%=raiz%>/<%=imagem%>" border="0" alt="<%=rotulo%>" class="<%= comando.getEstilo() != null ? comando.getEstilo() + " " : "" %>centroV" tabindex="0" <%= dica != null ? "title=\"" + dica + "\"" : "" %> onfocus="foco(this)" onblur="focoperdido(this)" />
 <%
 }else{
 %>
