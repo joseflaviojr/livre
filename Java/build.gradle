@@ -1,0 +1,109 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.5
+
+group = 'com.joseflavio'
+archivesBaseName = 'jfl'
+version = '2013'
+
+sourceSets {
+    main.java.srcDirs = ['fonte']
+    main.resources.srcDirs = ['recurso']
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Jose Flavio Livre',
+                   'Implementation-Version': version,
+                   'Main-Class': 'com.joseflavio.tqc.console.Teste'
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication( userName: 'xxxxxx', password: 'xxxxxx' )
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication( userName: 'xxxxxx', password: 'xxxxxx' )
+      }
+
+      pom.project {
+
+        name 'José Flávio Livre'
+        packaging 'jar'
+        description 'Biblioteca Java para desenvolvimento de aplicações gerais focada na qualidade com eficiência.'
+        url 'http://www.joseflavio.com/livre'
+
+        scm {
+          connection 'scm:git:ssh:git@github.com/joseflaviojr/livre.git'
+          developerConnection 'scm:git:ssh:git@github.com/joseflaviojr/livre.git'
+          url 'https://github.com/joseflaviojr/livre.git'
+        }
+
+        licenses {
+          license {
+            name 'GNU Lesser General Public License, Version 3'
+            url 'http://www.gnu.org/licenses/lgpl.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'joseflaviojr'
+            name 'José Flávio de Souza Dias Júnior'
+            email 'contato@joseflavio.com'
+          }
+        }
+
+      }
+
+    }
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'junit:junit:4.11'
+    compile 'log4j:log4j:1.2.17'
+    compile 'javax.xml.bind:jaxb-api:2.2.11'
+    compile 'javax.xml.stream:stax-api:1.0-2'
+    compile 'com.sun.xml.bind:jaxb-xjc:2.2.7'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-codec:commons-codec:1.9'
+    compile 'commons-net:commons-net:3.3'
+    compile 'commons-fileupload:commons-fileupload:1.3.1'
+    compile 'org.apache.commons:commons-email:1.3.2'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
+    compile 'org.eclipse.persistence:commonj.sdo:2.1.1'
+    compile 'org.apache.tomcat:servlet-api:6.0.39'
+    compile 'org.apache.tomcat:jsp-api:6.0.39'
+}

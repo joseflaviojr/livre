@@ -1,0 +1,8 @@
+
+Descrição: Implementação JNI da classe com.joseflavio.tqc.console.NativoConsole
+
+Plataforma: Microsoft Windows 32/64 bits
+
+Requisitos:
+	- Microsoft Visual C++ 2008 Express Edition
+	- Definir variável de ambiente JDK_HOME
