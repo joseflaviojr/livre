@@ -1,12 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'eclipse'
 apply plugin: 'signing'
-
-sourceCompatibility = 1.5
 
 group = 'com.joseflavio'
 archivesBaseName = 'jfl'
 version = '2013'
+
+sourceCompatibility = 1.6
+compileJava.options.encoding = 'ISO-8859-1'
 
 sourceSets {
     main.java.srcDirs = ['fonte']
@@ -24,6 +26,8 @@ jar {
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc
+    javadoc.options.encoding = 'ISO-8859-1'
+    javadoc.failOnError = false
 }
 
 task sourcesJar(type: Jar) {
@@ -106,4 +110,18 @@ dependencies {
     compile 'org.eclipse.persistence:commonj.sdo:2.1.1'
     compile 'org.apache.tomcat:servlet-api:6.0.39'
     compile 'org.apache.tomcat:jsp-api:6.0.39'
+}
+
+eclipse {
+    project {
+        name = 'jfl'
+    }
+    classpath {
+        defaultOutputDir = file('binario')
+        file {
+            beforeMerged {
+                classpath -> classpath.entries.removeAll { entry -> entry.kind == 'output' }
+            }
+        }
+    }
 }
