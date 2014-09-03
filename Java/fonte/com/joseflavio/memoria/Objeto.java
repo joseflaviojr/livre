@@ -41,6 +41,7 @@ package com.joseflavio.memoria;
 
 import java.io.Externalizable;
 import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
 /**
@@ -48,7 +49,9 @@ import java.util.Date;
  * Todo atributo serializável deste {@link Objeto} deve possuir um método de captura (get/is) e um método de atribuição (set), segundo o padrão JavaBeans.<br>
  * Todo {@link Objeto} deve possuir um construtor sem argumentos para fins de {@link Externalizable serialização}.<br>
  * O método {@link Object#equals(Object)} deve comparar apenas a {@link Class} e a {@link #getIdentidade()}.<br>
- * Regras de {@link Externalizable Serialização}:<br>
+ * O processo de {@link Externalizable Serialização} possui comportamento condicional:<br>
+ * 1) Se {@link ObjectOutput} for instância de {@link ObjectOutputStream}, o {@link Objeto} deverá utilizar o método {@link ObjectOutputStream#defaultWriteObject()}.<br>
+ * 2) Se {@link ObjectOutput} for instância de outra classe, o {@link Objeto} deverá seguir as seguintes regras de {@link Externalizable Serialização}:<br>
  * - Devem ser serializados todos os atributos não-estáticos e não-transientes acessíveis através de get/set da classe e de todas as superclasses.<br>
  * - A {@link #getIdentidade() identidade} deverá ser o primeiro atributo serializado.<br>
  * - Os demais atributos deverão ser serializados respeitando a ordem alfabética de seus nomes.<br>
