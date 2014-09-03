@@ -86,14 +86,15 @@ if( rolagem != null ){
 <!-- ------------------------------------------------------------------------------------------------- -->
 <script type="text/javascript" src="<%=raiz%>/ext/css_browser_selector/css_browser_selector.js"></script>
 <script type="text/javascript" src="<%=raiz%>/ext/modernizr/modernizr.tqc.js"></script>
-<script type="text/javascript" src="<%=raiz%>/ext/jquery/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="<%=raiz%>/ext/jquery/js/jquery-ui-1.10.3.custom.js"></script>
-<script type="text/javascript" src="<%=raiz%>/ext/jquery/development-bundle/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
-<script type="text/javascript" src="<%=raiz%>/ext/mask/jquery.mask.js"></script>
+<script type="text/javascript" src="<%=raiz%>/ext/jquery/jquery.js"></script>
+<script type="text/javascript" src="<%=raiz%>/ext/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=raiz%>/ext/mask/jquery.mask.min.js"></script>
 <script type="text/javascript" src="<%=raiz%>/<%=pele%>/script/Aplicacao.js"></script>
 <!-- ------------------------------------------------------------------------------------------------- -->
 <link rel="stylesheet" type="text/css" href="<%=raiz%>/css/tqc.css" />
-<link rel="stylesheet" type="text/css" href="<%=raiz%>/ext/jquery/css/padrao/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" href="<%=raiz%>/ext/jquery/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=raiz%>/ext/jquery/jquery-ui.structure.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=raiz%>/ext/jquery/jquery-ui.theme.min.css" />
 <%
 EstiloFonte[] estiloFontes = tqc.listarEstiloFontes();
 for( int i = 0; i < estiloFontes.length; i++ ){
@@ -104,7 +105,6 @@ for( int i = 0; i < estiloFontes.length; i++ ){
 <% } %>
 <!-- ------------------------------------------------------------------------------------------------- -->
 <script>
-
 //----------------------
 
 var raiz = "<%=raiz%>";
@@ -121,7 +121,8 @@ if( negligenciarNavegador != "sim" ){
 }
 
 //----------------------
-
+</script>
+<script>
 <% boolean seltextoPrimeiro; %>
 <% for( SelecionavelTexto st : informacao.getDados( SelecionavelTexto.class ) ){ %>
 	$(function() {
@@ -140,8 +141,5 @@ if( negligenciarNavegador != "sim" ){
 		});
 	});
 <% } %>
-
-//----------------------
-
 </script>
 <!-- ------------------------------------------------------------------------------------------------- -->

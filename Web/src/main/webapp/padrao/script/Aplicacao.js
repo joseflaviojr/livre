@@ -256,17 +256,17 @@ function desativarAreaDeSaida() {
 //----------------------
 
 $(function() {
-	$( ".dadoData" ).datepicker({
-		regional: "pt-BR",
-		showOn: "button",
-		buttonImage: raiz + "/img/iconep/calendario.png",
-		buttonImageOnly: true,
-		buttonText: null,
-		numberOfMonths: 2,
-		showButtonPanel: true,
-		changeMonth: true,
-		changeYear: true
-	});
+	// $( ".dadoData" ).datepicker({
+	// 	regional: "pt-BR",
+	// 	showOn: "button",
+	// 	buttonImage: raiz + "/img/iconep/calendario.png",
+	// 	buttonImageOnly: true,
+	// 	buttonText: null,
+	// 	numberOfMonths: 2,
+	// 	showButtonPanel: true,
+	// 	changeMonth: true,
+	// 	changeYear: true
+	// });
 	$( ".dadoData" ).mask( "99/99/9999" );
 	$( ".dadoHora" ).mask( "99:99" );
 	$( ".dadoDataHora" ).mask( "99/99/9999 99:99" );
