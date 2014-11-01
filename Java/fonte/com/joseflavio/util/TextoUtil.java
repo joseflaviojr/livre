@@ -44,7 +44,7 @@ import java.util.List;
 
 /**
  * @author José Flávio de Souza Dias Júnior
- * @version 2013
+ * @version 2014
  */
 public class TextoUtil {
 
@@ -70,18 +70,18 @@ public class TextoUtil {
 		
 	}
 	
-	public static String fixarComprimento( String texto, int comprimentoMaximo, boolean usarReticencias ) {
+	public static String fixarComprimento( String texto, int comprimento, boolean usarReticencias ) {
 
 		if( texto == null ) return "";
 		
 		int len = texto.length();
 		
-		if( len < comprimentoMaximo ){
+		if( len < comprimento ){
 			
-			StringBuilder sb = new StringBuilder( comprimentoMaximo );
+			StringBuilder sb = new StringBuilder( comprimento );
 			sb.append( texto );
 
-			len = comprimentoMaximo - len;
+			len = comprimento - len;
 			
 			for( int i = 0; i < len; i++ ){
 				sb.append( ' ' );
@@ -91,7 +91,7 @@ public class TextoUtil {
 			
 		}
 		
-		return limitarComprimento( texto, comprimentoMaximo, usarReticencias );
+		return limitarComprimento( texto, comprimento, usarReticencias );
 		
 	}
 	

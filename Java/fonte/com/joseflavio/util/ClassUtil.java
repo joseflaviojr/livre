@@ -41,13 +41,14 @@ package com.joseflavio.util;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.joseflavio.modelo.AssistenteDeAtributo;
 
 /**
  * @author José Flávio de Souza Dias Júnior
- * @version 2013
+ * @version 2014
  * @see AssistenteDeAtributo
  */
 public class ClassUtil {
@@ -86,6 +87,30 @@ public class ClassUtil {
 		}
 		
 		return metodos;
+		
+	}
+	
+	/**
+	 * Classes atômicas: primitivos, invólucros dos primitivos, enumerações, {@link String}, {@link Date} e {@link Class}.
+	 */
+	public static boolean isAtomica( Class<?> classe ) {
+
+		if( classe == int.class || classe == Integer.class ) return true;
+		if( classe == long.class || classe == Long.class ) return true;
+		if( classe == byte.class || classe == Byte.class ) return true;
+		if( classe == short.class || classe == Short.class ) return true;
+		if( classe == float.class || classe == Float.class ) return true;
+		if( classe == double.class || classe == Double.class ) return true;
+		if( classe == boolean.class || classe == Boolean.class ) return true;
+		if( classe == char.class || classe == Character.class ) return true;
+		
+		if( classe.isEnum() ) return true;
+		
+		if( classe == String.class ) return true;
+		if( classe == Date.class ) return true;
+		if( classe == Class.class ) return true;
+		
+		return false;
 		
 	}
 	

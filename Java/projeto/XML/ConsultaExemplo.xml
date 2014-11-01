@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<consultas
+	descricao="Exemplos de consultas"
+	xmlns="http://www.joseflavio.com/xml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.joseflavio.com/xml http://www.joseflavio.com/xml/Consulta.xsd">
+
+	<parametro nome="jdbc" valor="org.postgresql.Driver"/>
+	<parametro nome="url" valor="jdbc:postgresql://localhost:5432/exemplo"/>
+	<parametro nome="usuario" valor="exemplo"/>
+	<parametro nome="senha" valor="123456"/>
+
+	<consulta nome="Exemplo" descricao="Exemplo de consulta">
+
+		<parametro nome="nome completo" valor="A%" tipo="Texto" alteravel="S"/>
+		<parametro nome="data de registro" valor="01/01/2001"/>
+
+		<questionamento>
+			select * from Exemplo
+			where nome like ::nome completo:: and apelido = ::usuario:: and registro &gt;= ::data de registro::
+			order by nome asc
+		</questionamento>
+
+		<traducao campo="sexo" tipo="Genero"/>
+		<traducao campo="excluido" tipo="Logica"/>
+
+		<documentacao>
+			Documentação específica do Exemplo.
+		</documentacao>
+
+	</consulta>
+
+	<consulta nome="Exemplo2" descricao="Segundo exemplo de consulta">
+		<questionamento>
+			select * from Exemplo2
+		</questionamento>
+		<traducao campo="valido" tipo="Logica"/>
+	</consulta>
+
+	<traducao nome="Logica">
+		<valor original="0" traducao="Não"/>
+		<valor original="1" traducao="Sim"/>
+	</traducao>
+
+	<traducao nome="Genero">
+		<valor original="M" traducao="Masculino"/>
+		<valor original="F" traducao="Feminino"/>
+	</traducao>
+
+	<desconsiderar>
+		<consulta>Exemplo2</consulta>
+	</desconsiderar>
+
+	<documentacao>
+			Documentação geral.
+	</documentacao>
+
+</consultas>

@@ -44,7 +44,7 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author José Flávio de Souza Dias Júnior
- * @version 2013
+ * @version 2014
  */
 public class Instanciador<T> {
 
@@ -61,12 +61,9 @@ public class Instanciador<T> {
 	
 	public static Constructor<?> getConstrutor( Class<?> classe, Object... parametros ) throws IllegalArgumentException {
 		
-		int i;
-		boolean ok;
-		
 		Class<?> a[] = new Class<?>[ parametros.length ];
-		for( i = 0; i < a.length; i++ ){
-			a[i] = parametros[i].getClass();
+		for( int i = 0; i < a.length; i++ ){
+			a[i] = parametros[i] != null ? parametros[i].getClass() : null;
 		}
 		
 		for( Constructor<?> c : classe.getDeclaredConstructors() ){
@@ -75,9 +72,11 @@ public class Instanciador<T> {
 
 			if( a.length != b.length ) continue;
 			
-			ok = true;
-			for( i = 0; i < b.length; i++ ){
-				if( ! ClassUtil.getInvolucro( b[i] ).isAssignableFrom( a[i] ) ){
+			boolean ok = true;
+			for( int i = 0; i < b.length; i++ ){
+				Class<?> x = a[i];
+				Class<?> y = b[i];
+				if( ( x != null && ! ClassUtil.getInvolucro( y ).isAssignableFrom( x ) ) || ( x == null && y.isPrimitive() ) ){
 					ok = false;
 					break;
 				}
