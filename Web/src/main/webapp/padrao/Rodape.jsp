@@ -72,10 +72,14 @@ mostrarOuOcultarRodapeFixo();
 <%
 String focoElemento = informacao.getAnexo( AnexoControleDeFoco.class, true ).getElemento();
 if( focoElemento != null && focoElemento.length() > 0 ){
+if( informacao.getDado( focoElemento ) != null ){
 %>
+var focoElemento = document.getElementById( "<tqc:id nome='<%=focoElemento%>'/>" );
+if( focoElemento != null ) focoElemento.focus();
+<% }else{ %>
 var focoElemento = document.getElementById( "<%=focoElemento%>" );
 if( focoElemento != null ) focoElemento.focus();
-<% } %>
+<% } } %>
 
 //----------------------
 
