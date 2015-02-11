@@ -37,18 +37,30 @@
  *  junto com José Flávio Livre. Se não, veja <http://www.gnu.org/licenses/>.
  */
 
-package com.joseflavio.validacao;
-
+package com.joseflavio;
 
 /**
- * Garante a validade de um objeto para uma ou mais situações previamente analisadas.
+ * Violação da segurança da informação.
  * @author José Flávio de Souza Dias Júnior
- * @version 2013
+ * @version 2014
  */
-public abstract class Validacao {
-	
-	public abstract void validar( Object objeto ) throws ValidacaoException;
+public class SegurancaException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
+	public SegurancaException() {
+	}
+
+	public SegurancaException( String mensagem, Throwable causa ) {
+		super( mensagem, causa );
+	}
+
+	public SegurancaException( String mensagem ) {
+		super( mensagem );
+	}
+
+	public SegurancaException( Throwable causa ) {
+		super( causa );
+	}
 	
 }
-
-//TODO Contruir mecanismo de validação de entidades.

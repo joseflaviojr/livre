@@ -214,6 +214,7 @@ public class TipoFormatacao {
 			return Tipo.DATA_HORA;
 		}else if( valor.length() == 1 ){
 			return Tipo.LETRA;
+		//TODO TEXTO_MULTILINHA contém \n
 		}
 		
 		return Tipo.TEXTO;

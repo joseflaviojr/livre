@@ -49,7 +49,7 @@ import com.joseflavio.validacao.ValidacaoException;
 
 /**
  * @author José Flávio de Souza Dias Júnior
- * @version 2013
+ * @version 2014
  */
 public abstract class ComandoQuestionamento<T extends AplicacaoTQC> extends ComandoImplementado implements AcionamentoDeComando {
 
@@ -97,6 +97,14 @@ public abstract class ComandoQuestionamento<T extends AplicacaoTQC> extends Coma
 	public abstract void sim( T aplicacao, Viagem viagem ) throws TomaraQueCaiaException;
 	
 	public void nao( T aplicacao, Viagem viagem ) throws TomaraQueCaiaException {
+	}
+	
+	public String getPergunta() {
+		return pergunta;
+	}
+	
+	public void setPergunta( String pergunta ) {
+		this.pergunta = pergunta;
 	}
 	
 }
