@@ -1,7 +1,7 @@
 
 <% /*
 
-  Copyright (C) 2009-2014 José Flávio de Souza Dias Júnior
+  Copyright (C) 2009-2015 José Flávio de Souza Dias Júnior
   
   This file is part of José Flávio Livre - <http://www.joseflavio.com/livre/>.
   
@@ -22,7 +22,7 @@
 
 <% /*
 
-  Direitos Autorais Reservados (C) 2009-2014 José Flávio de Souza Dias Júnior
+  Direitos Autorais Reservados (C) 2009-2015 José Flávio de Souza Dias Júnior
   
   Este arquivo é parte de José Flávio Livre - <http://www.joseflavio.com/livre/>.
   
