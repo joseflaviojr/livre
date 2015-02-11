@@ -39,6 +39,8 @@
 
 package com.joseflavio.util;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * ++
  * @author José Flávio de Souza Dias Júnior
@@ -48,28 +50,61 @@ public class Contador {
 
 	private long conta = 0;
 	
+	private ReentrantLock trava;
+	
 	/**
-	 * Inicia em 0.
+	 * Inicia em 0 e sem sincronização.
 	 */
 	public Contador() {
+		this( 0, false );
 	}
 	
+	/**
+	 * Cria um {@link Contador} sem sincronização e com um valor inicial.
+	 */
 	public Contador( long contaInicial ) {
+		this( contaInicial, false );
+	}
+	
+	/**
+	 * @param contaInicial Valor inicial do {@link Contador}.
+	 * @param sincronizado {@link ReentrantLock}?
+	 */
+	public Contador( long contaInicial, boolean sincronizado ) {
 		this.conta = contaInicial;
+		this.trava = sincronizado ? new ReentrantLock() : null;
 	}
 	
 	/**
 	 * @return {@link #getConta()}
 	 */
 	public long incrementar() {
-		return ++conta;
+		if( trava != null ){
+			trava.lock();
+			try{
+				return ++conta;	
+			}finally{
+				trava.unlock();
+			}
+		}else{
+			return ++conta;
+		}
 	}
 	
 	/**
 	 * @return {@link #getConta()}
 	 */
 	public long decrementar() {
-		return --conta;
+		if( trava != null ){
+			trava.lock();
+			try{
+				return --conta;	
+			}finally{
+				trava.unlock();
+			}
+		}else{
+			return --conta;
+		}
 	}
 	
 	public long getConta() {
@@ -77,7 +112,16 @@ public class Contador {
 	}
 	
 	public void setConta( long conta ) {
-		this.conta = conta;
+		if( trava != null ){
+			trava.lock();
+			try{
+				this.conta = conta;	
+			}finally{
+				trava.unlock();
+			}
+		}else{
+			this.conta = conta;
+		}
 	}
 	
 }
