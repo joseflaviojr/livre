@@ -48,80 +48,120 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Contador {
 
-	private long conta = 0;
+	private long conta;
+	
+	private long limiteInferior;
+	
+	private long limiteSuperior;
+	
+	private boolean ciclico;
 	
 	private ReentrantLock trava;
 	
 	/**
-	 * Inicia em 0 e sem sincronização.
+	 * Inicia em 0, limitado a {@link Long#MIN_VALUE}..{@link Long#MAX_VALUE}, sem ciclicidade e sem sincronização.
+	 * @see Contador#Contador(long, long, long, boolean, boolean)
 	 */
 	public Contador() {
-		this( 0, false );
+		this( 0, Long.MIN_VALUE, Long.MAX_VALUE, false, false );
 	}
 	
 	/**
-	 * Cria um {@link Contador} sem sincronização e com um valor inicial.
+	 * Inicia em <code>contaInicial</code>, limitado a {@link Long#MIN_VALUE}..{@link Long#MAX_VALUE}, sem ciclicidade e sem sincronização.
+	 * @see Contador#Contador(long, long, long, boolean, boolean)
 	 */
 	public Contador( long contaInicial ) {
-		this( contaInicial, false );
+		this( contaInicial, Long.MIN_VALUE, Long.MAX_VALUE, false, false );
 	}
 	
 	/**
-	 * @param contaInicial Valor inicial do {@link Contador}.
-	 * @param sincronizado {@link ReentrantLock}?
+	 * Limitado a {@link Long#MIN_VALUE}..{@link Long#MAX_VALUE} sem ciclicidade.
+	 * @see Contador#Contador(long, long, long, boolean, boolean)
 	 */
 	public Contador( long contaInicial, boolean sincronizado ) {
+		this( contaInicial, Long.MIN_VALUE, Long.MAX_VALUE, false, sincronizado );
+	}
+	
+	/**
+	 * Limitado a {@link Long#MIN_VALUE}..{@link Long#MAX_VALUE}.
+	 * @see Contador#Contador(long, long, long, boolean, boolean)
+	 */
+	public Contador( long contaInicial, boolean ciclico, boolean sincronizado ) {
+		this( contaInicial, Long.MIN_VALUE, Long.MAX_VALUE, ciclico, sincronizado );
+	}
+	
+	/**
+	 * @param contaInicial Valor inicial.
+	 * @param limiteInferior Valor mínimo.
+	 * @param limiteSuperior Valor máximo.
+	 * @param ciclico Fechar um ciclo de evolução entre o valor inferior e o superior.
+	 * @param sincronizado {@link ReentrantLock}?
+	 */
+	public Contador( long contaInicial, long limiteInferior, long limiteSuperior, boolean ciclico, boolean sincronizado ) {
+		if( limiteInferior > limiteSuperior ) throw new IllegalArgumentException( "Limite inferior maior que o superior." );
+		if( contaInicial < limiteInferior || contaInicial > limiteSuperior ) throw new IllegalArgumentException( "Conta inicial fora do limite." );
 		this.conta = contaInicial;
+		this.limiteInferior = limiteInferior;
+		this.limiteSuperior = limiteSuperior;
+		this.ciclico = ciclico;
 		this.trava = sincronizado ? new ReentrantLock() : null;
 	}
-	
+
 	/**
-	 * @return {@link #getConta()}
+	 * Incrementa a contagem, estagnando em {@link #getLimiteSuperior()}.
+	 * @return {@link #getConta()} após o incremento.
 	 */
 	public long incrementar() {
-		if( trava != null ){
-			trava.lock();
-			try{
-				return ++conta;	
-			}finally{
-				trava.unlock();
-			}
-		}else{
-			return ++conta;
+		if( trava != null ) trava.lock();
+		try{
+			if( conta == limiteSuperior ) return ciclico ? conta = limiteInferior : conta;
+			return ++conta;	
+		}finally{
+			if( trava != null ) trava.unlock();
 		}
 	}
 	
 	/**
-	 * @return {@link #getConta()}
+	 * Decrementa a contagem, estagnando em {@link #getLimiteInferior()}.
+	 * @return {@link #getConta()} após o decremento.
 	 */
 	public long decrementar() {
-		if( trava != null ){
-			trava.lock();
-			try{
-				return --conta;	
-			}finally{
-				trava.unlock();
-			}
-		}else{
-			return --conta;
+		if( trava != null ) trava.lock();
+		try{
+			if( conta == limiteInferior ) return ciclico ? conta = limiteSuperior : conta;
+			return --conta;	
+		}finally{
+			if( trava != null ) trava.unlock();
 		}
 	}
 	
+	/**
+	 * Valor atual de contagem.
+	 */
 	public long getConta() {
 		return conta;
 	}
 	
+	/**
+	 * Altera o valor atual de contagem.<br>
+	 * Deve-se evitar utilizar este método, pois quebra a lógica funcional do {@link Contador} (sequência numérica).
+	 */
 	public void setConta( long conta ) {
-		if( trava != null ){
-			trava.lock();
-			try{
-				this.conta = conta;	
-			}finally{
-				trava.unlock();
-			}
-		}else{
+		if( trava != null ) trava.lock();
+		try{
+			if( conta < limiteInferior || conta > limiteSuperior ) throw new IllegalArgumentException( "Conta fora do limite." );
 			this.conta = conta;
+		}finally{
+			if( trava != null ) trava.unlock();
 		}
+	}
+	
+	public long getLimiteInferior() {
+		return limiteInferior;
+	}
+	
+	public long getLimiteSuperior() {
+		return limiteSuperior;
 	}
 	
 }

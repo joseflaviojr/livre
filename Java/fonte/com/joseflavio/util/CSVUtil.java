@@ -39,8 +39,8 @@
 
 package com.joseflavio.util;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 
 /**
@@ -58,7 +58,7 @@ public class CSVUtil {
 	 * @param buffer Buffer a ser utilizado durante o processamento da linha.
 	 * @return o número de colunas lidas.
 	 */
-	public static int proximaLinha( FileReader arquivo, String[] colunas, char separador, StringBuilder buffer ) throws IOException {
+	public static int proximaLinha( Reader arquivo, String[] colunas, char separador, StringBuilder buffer ) throws IOException {
 		
 		int len = buffer.length();
 		if( len > 0 ) buffer.delete( 0, len );
@@ -98,7 +98,7 @@ public class CSVUtil {
 	 * @param buffer Buffer que receberá o conteúdo da coluna. Observação: o buffer será limpado antes do procedimento.
 	 * @return <code>null</code>, caso o fim de arquivo tenha sido alcançado.
 	 */
-	public static StringBuilder proximaColuna( FileReader arquivo, char separador, boolean retirarAspas, StringBuilder buffer ) throws IOException {
+	public static StringBuilder proximaColuna( Reader arquivo, char separador, boolean retirarAspas, StringBuilder buffer ) throws IOException {
 		
 		int len = buffer.length();
 		if( len > 0 ) buffer.delete( 0, len );
