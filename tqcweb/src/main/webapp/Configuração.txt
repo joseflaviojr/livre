@@ -3,5 +3,10 @@ Em [TOMCAT]/conf/web.xml, seção "<servlet><servlet-name>jsp</servlet-name>...", 
 			<param-name>enablePooling</param-name>
 			<param-value>false</param-value>
 		</init-param>
-		
+
+Em [TOMCAT]/conf/server.xml:
+<Connector port="80" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" maxPostSize="52428800" />
+
 Limpar [TOMCAT]/work/Catalina.

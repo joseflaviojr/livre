@@ -4,7 +4,7 @@
   <groupId>com.joseflavio</groupId>
   <artifactId>tqc</artifactId>
   <packaging>war</packaging>
-  <version>2013</version>
+  <version>4.0</version>
   <name>Tomara Que Caia</name>
   <url>http://www.joseflavio.com/livre</url>
 
@@ -13,7 +13,8 @@
 	<dependency>
 		<groupId>com.joseflavio</groupId>
 		<artifactId>jfl</artifactId>
-		<version>2013</version>
+		<version>4.0</version>
+		<classifier>javaee</classifier>
 	</dependency>
 
 	<dependency>
@@ -77,18 +78,6 @@
 	</dependency>
 
 	<dependency>
-		<groupId>org.eclipse.persistence</groupId>
-		<artifactId>org.eclipse.persistence.jpa</artifactId>
-		<version>2.5.1</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.eclipse.persistence</groupId>
-		<artifactId>commonj.sdo</artifactId>
-		<version>2.1.1</version>
-	</dependency>
-
-	<dependency>
 		<groupId>postgresql</groupId>
 		<artifactId>postgresql</artifactId>
 		<version>9.1-901.jdbc4</version>
@@ -101,16 +90,9 @@
 	</dependency>
 
 	<dependency>
-		<groupId>org.apache.tomcat</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>6.0.39</version>
-		<scope>provided</scope>
-	</dependency>
-
-	<dependency>
-		<groupId>org.apache.tomcat</groupId>
-		<artifactId>jsp-api</artifactId>
-		<version>6.0.39</version>
+		<groupId>javax</groupId>
+		<artifactId>javaee-api</artifactId>
+		<version>7.0</version>
 		<scope>provided</scope>
 	</dependency>
 

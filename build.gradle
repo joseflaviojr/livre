@@ -3,9 +3,12 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'signing'
 
+String nome = 'Jose Flavio Livre'
+String sigla = 'JFL'
+
 group = 'com.joseflavio'
 archivesBaseName = 'jfl'
-version = '2013'
+version = '4.0'
 
 sourceCompatibility = 1.6
 compileJava.options.encoding = 'ISO-8859-1'
@@ -16,23 +19,51 @@ sourceSets {
 }
 
 jar {
+    
+    from sourceSets.main.output
+
     manifest {
-        attributes 'Implementation-Title': 'Jose Flavio Livre',
+        attributes 'Implementation-Title': nome + ' - JavaSE',
                    'Implementation-Version': version,
-                   'Main-Class': 'com.joseflavio.tqc.console.Teste'
+                   'Main-Class': ''
     }
+
+    exclude 'com/joseflavio/jpa/**'
+    exclude 'com/joseflavio/tqc/servlet/**'
+    exclude '*.dll'
+
 }
 
-task jarFonte(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+task jarJavaSE(type: Jar) {
+
+    classifier = 'javase'
+    from sourceSets.main.output
+
+    manifest {
+        attributes 'Implementation-Title': nome + ' - JavaSE',
+                   'Implementation-Version': version,
+                   'Main-Class': ''
+    }
+
+    exclude 'com/joseflavio/jpa/**'
+    exclude 'com/joseflavio/tqc/servlet/**'
+    exclude '*.dll'
+
 }
 
-task jarJavadoc(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-    javadoc.options.encoding = 'ISO-8859-1'
-    javadoc.failOnError = false
+task jarJavaEE(type: Jar) {
+
+    classifier = 'javaee'
+    from sourceSets.main.output
+
+    manifest {
+        attributes 'Implementation-Title': nome + ' - JavaEE',
+                   'Implementation-Version': version,
+                   'Main-Class': ''
+    }
+
+    exclude '*.dll'
+
 }
 
 task jarAndroid(type: Jar) {
@@ -41,7 +72,7 @@ task jarAndroid(type: Jar) {
     from sourceSets.main.output
     
     manifest {
-        attributes 'Implementation-Title': 'Jose Flavio Livre - Android',
+        attributes 'Implementation-Title': nome + ' - Android',
                    'Implementation-Version': version,
                    'Main-Class': ''
     }
@@ -49,13 +80,74 @@ task jarAndroid(type: Jar) {
     exclude 'com/joseflavio/dominio/activedirectory/**'
     exclude 'com/joseflavio/jpa/**'
     exclude 'com/joseflavio/tqc/**'
+    exclude '*.dll'
+
+}
+
+task jarLinux(type: Jar) {
+    
+    classifier = 'linux'
+    from sourceSets.main.output
+    
+    manifest {
+        attributes 'Implementation-Title': nome + ' - Linux',
+                   'Implementation-Version': version,
+                   'Main-Class': ''
+    }
 
     exclude '*.dll'
 
 }
 
+task jarWindows(type: Jar) {
+    
+    classifier = 'windows'
+    from sourceSets.main.output
+    
+    manifest {
+        attributes 'Implementation-Title': nome + ' - Windows',
+                   'Implementation-Version': version,
+                   'Main-Class': ''
+    }
+
+}
+
+task jarFonte(type: Jar) {
+    
+    classifier = 'sources'
+    from sourceSets.main.allSource
+
+    manifest {
+        attributes 'Implementation-Title': nome,
+                   'Implementation-Version': version,
+                   'Main-Class': ''
+    }
+
+    exclude '*.dll'
+
+}
+
+task jarDoc(type: Jar) {
+
+    classifier = 'javadoc'
+    from javadoc
+
+    javadoc.options.encoding = 'ISO-8859-1'
+    javadoc.failOnError = false
+    javadoc.title = nome + ' - ' + sigla + ' ' + version
+    javadoc.options.links = [
+        'http://docs.oracle.com/javase/7/docs/api/',
+        'http://docs.oracle.com/javaee/7/api/'
+    ]
+    
+}
+
+task JFL(dependsOn:[
+    jar, jarJavaSE, jarJavaEE, jarAndroid, jarLinux, jarWindows, jarFonte, jarDoc
+])
+
 artifacts {
-    archives jarFonte, jarJavadoc, jarAndroid
+    archives jar, jarJavaSE, jarJavaEE, jarAndroid, jarLinux, jarWindows, jarFonte, jarDoc
 }
 
 signing {
@@ -80,15 +172,12 @@ dependencies {
     compile 'commons-net:commons-net:3.3'
     compile 'commons-fileupload:commons-fileupload:1.3.1'
     compile 'org.apache.commons:commons-email:1.3.2'
-    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
-    compile 'org.eclipse.persistence:commonj.sdo:2.1.1'
-    compile 'org.apache.tomcat:servlet-api:6.0.39'
-    compile 'org.apache.tomcat:jsp-api:6.0.39'
+    compile 'javax:javaee-api:7.0'
 }
 
 eclipse {
     project {
-        name = 'jfl'
+        name = archivesBaseName
     }
     classpath {
         defaultOutputDir = file('binario')
@@ -118,7 +207,7 @@ uploadArchives {
 
         name 'José Flávio Livre'
         packaging 'jar'
-        description 'Biblioteca Java para desenvolvimento de aplicações gerais focada na qualidade com eficiência.'
+        description 'Biblioteca Java para desenvolvimento de aplicações gerais.'
         url 'http://www.joseflavio.com/livre'
 
         scm {
